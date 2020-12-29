@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csl.classroom.mapper.ClassroomMapper">
+    <resultMap id="BaseResultMap" type="com.csl.classroom.model.Classroom">
+        <!--@mbg.generated-->
+        <!--@Table classroom-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="capacity" jdbcType="INTEGER" property="capacity"/>
+        <result column="building_id" jdbcType="INTEGER" property="buildingId"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, `name`, capacity, building_id, `status`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from classroom
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete from classroom
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.csl.classroom.model.Classroom"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into classroom (`name`, capacity, building_id,
+        `status`)
+        values (#{name,jdbcType=VARCHAR}, #{capacity,jdbcType=INTEGER}, #{buildingId,jdbcType=INTEGER},
+        #{status,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.csl.classroom.model.Classroom"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into classroom
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="capacity != null">
+                capacity,
+            </if>
+            <if test="buildingId != null">
+                building_id,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="capacity != null">
+                #{capacity,jdbcType=INTEGER},
+            </if>
+            <if test="buildingId != null">
+                #{buildingId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.csl.classroom.model.Classroom">
+        <!--@mbg.generated-->
+        update classroom
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="capacity != null">
+                capacity = #{capacity,jdbcType=INTEGER},
+            </if>
+            <if test="buildingId != null">
+                building_id = #{buildingId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.csl.classroom.model.Classroom">
+        <!--@mbg.generated-->
+        update classroom
+        set `name` = #{name,jdbcType=VARCHAR},
+        capacity = #{capacity,jdbcType=INTEGER},
+        building_id = #{buildingId,jdbcType=INTEGER},
+        `status` = #{status,jdbcType=TINYINT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <sql id="Join_Column_List">
+        <!--@mbg.generated-->
+        classroom.id as classroom_id, classroom.`name` as classroom_name, classroom.capacity as classroom_capacity,
+        classroom.building_id as classroom_building_id, classroom.`status` as classroom_status
+    </sql>
+    <resultMap id="JoinResultMap" type="com.csl.classroom.model.Classroom">
+        <!--@mbg.generated-->
+        <id column="classroom_id" jdbcType="INTEGER" property="id"/>
+        <result column="classroom_name" jdbcType="VARCHAR" property="name"/>
+        <result column="classroom_capacity" jdbcType="INTEGER" property="capacity"/>
+        <result column="classroom_building_id" jdbcType="INTEGER" property="buildingId"/>
+        <result column="classroom_status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="WithBuildingResultMap" type="ClassroomWithBuilding">
+        <association column="building_id" javaType="java.lang.String" property="buildingName"
+                     select="findBuildingNameByBuildingId"/>
+    </resultMap>
+    <select id="findAll" resultMap="WithBuildingResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from classroom
+        <where>
+            <if test="keyword != null and keyword != ''">
+                name like concat('%', #{keyword,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </select>
+    <select id="findBuildingNameByBuildingId" resultType="string">
+        select full_name
+        from building
+        where id = #{id}
+    </select>
+</mapper>

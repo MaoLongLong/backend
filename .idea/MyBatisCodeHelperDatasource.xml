@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MyBatisCodeHelperDatasource">
+    <option name="projectProfile">
+      <ProjectProfile>
+        <option name="genSqlFilePath" value="$PROJECT_DIR$/src/com/csl/classroom/model/sql" />
+        <option name="javaMapperPackage" value="com.csl.classroom.mapper" />
+        <option name="javaMapperPath" value="$PROJECT_DIR$/src" />
+        <option name="javaModelPackage" value="com.csl.classroom.model" />
+        <option name="javaModelPath" value="$PROJECT_DIR$/src" />
+        <option name="lastDatabaseCrudChooseModuleName" value="classroom" />
+        <option name="lombokDataAnnotation" value="true" />
+        <option name="moduleNameToPackageAndPathMap">
+          <map>
+            <entry key="classroom">
+              <value>
+                <UserPackageAndPathInfoByModule>
+                  <option name="javaMapperPackage" value="com.csl.classroom.mapper" />
+                  <option name="javaMapperPath" value="$PROJECT_DIR$/src" />
+                  <option name="javaModelPacakge" value="com.csl.classroom.model" />
+                  <option name="javaModelPath" value="$PROJECT_DIR$/src" />
+                  <option name="xmlPackage" value="com.csl.classroom.mapper" />
+                  <option name="xmlPath" value="C:\Users\MaoLongLong\IdeaProjects\classroom\src" />
+                </UserPackageAndPathInfoByModule>
+              </value>
+            </entry>
+          </map>
+        </option>
+        <option name="tableGenerateConfigs">
+          <map>
+            <entry key="classroom:building">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="Building" />
+                  <option name="moduleName" value="classroom" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="classroom:classroom">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="Classroom" />
+                  <option name="moduleName" value="classroom" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="classroom:user">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="User" />
+                  <option name="moduleName" value="classroom" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+          </map>
+        </option>
+        <option name="xmlMapperPackage" value="com.csl.classroom.mapper" />
+        <option name="xmlMapperPath" value="C:\Users\MaoLongLong\IdeaProjects\classroom\src" />
+      </ProjectProfile>
+    </option>
+  </component>
+</project>
