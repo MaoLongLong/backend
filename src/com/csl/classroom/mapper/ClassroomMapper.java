@@ -1,7 +1,7 @@
 package com.csl.classroom.mapper;
 
 import com.csl.classroom.model.Classroom;
-import com.csl.classroom.model.ClassroomWithBuilding;
+import com.csl.classroom.model.ClassroomDetails;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -25,5 +25,5 @@ public interface ClassroomMapper {
 
     int updateByPrimaryKey(Classroom record);
 
-    List<ClassroomWithBuilding> findAll(@Param("keyword") String keyword);
+    List<ClassroomDetails> findAll(@Param("keyword") String keyword);
 }

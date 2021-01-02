@@ -24,12 +24,12 @@
         <url-pattern>/api/classroom</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>buildingDetailServlet</servlet-name>
-        <servlet-class>com.csl.classroom.servlet.BuildingDetailServlet</servlet-class>
+        <servlet-name>buildingDetailsServlet</servlet-name>
+        <servlet-class>com.csl.classroom.servlet.BuildingDetailsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>buildingDetailServlet</servlet-name>
-        <url-pattern>/api/building/detail</url-pattern>
+        <servlet-name>buildingDetailsServlet</servlet-name>
+        <url-pattern>/api/building/details</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>signupServlet</servlet-name>
@@ -54,6 +54,14 @@
     <servlet-mapping>
         <servlet-name>userInfoServlet</servlet-name>
         <url-pattern>/api/userInfo</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>com.csl.classroom.servlet.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/api/user</url-pattern>
     </servlet-mapping>
 
     <filter>

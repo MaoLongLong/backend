@@ -108,11 +108,11 @@
         <result column="classroom_building_id" jdbcType="INTEGER" property="buildingId"/>
         <result column="classroom_status" jdbcType="TINYINT" property="status"/>
     </resultMap>
-    <resultMap extends="BaseResultMap" id="WithBuildingResultMap" type="ClassroomWithBuilding">
+    <resultMap extends="BaseResultMap" id="DetailsResultMap" type="ClassroomDetails">
         <association column="building_id" javaType="java.lang.String" property="buildingName"
                      select="findBuildingNameByBuildingId"/>
     </resultMap>
-    <select id="findAll" resultMap="WithBuildingResultMap">
+    <select id="findAll" resultMap="DetailsResultMap">
         select
         <include refid="Base_Column_List"/>
         from classroom

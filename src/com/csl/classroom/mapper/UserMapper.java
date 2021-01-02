@@ -1,7 +1,8 @@
 package com.csl.classroom.mapper;
-
 import com.csl.classroom.model.User;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author MaoLongLong
@@ -23,4 +24,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User findOneByUsername(@Param("username") String username);
+
+    List<User> findAll();
 }

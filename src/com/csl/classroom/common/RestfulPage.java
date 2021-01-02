@@ -10,7 +10,7 @@ import java.util.List;
  * @date 2020-12-26 16:25
  */
 @Data
-public class CommonPage<T> {
+public class RestfulPage<T> {
 
     private Integer pageNum;
     private Integer pageSize;
@@ -18,8 +18,8 @@ public class CommonPage<T> {
     private Long total;
     private List<T> list;
 
-    public static <T> CommonPage<T> restfulPage(PageInfo<T> pageInfo) {
-        CommonPage<T> page = new CommonPage<>();
+    public static <T> RestfulPage<T> of(PageInfo<T> pageInfo) {
+        RestfulPage<T> page = new RestfulPage<>();
         page.setPageNum(pageInfo.getPageNum());
         page.setPageSize(pageInfo.getSize());
         page.setPageCount(pageInfo.getPages());

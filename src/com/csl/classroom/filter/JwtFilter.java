@@ -1,9 +1,9 @@
 package com.csl.classroom.filter;
 
 import cn.hutool.core.util.StrUtil;
-import com.csl.classroom.common.CommonResult;
+import com.csl.classroom.common.ResponseEntity;
+import com.csl.classroom.util.JsonUtil;
 import com.csl.classroom.util.JwtUtil;
-import com.csl.classroom.util.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
@@ -38,10 +38,10 @@ public class JwtFilter implements Filter {
                 log.info("用户 [{}] 验证成功", username);
                 filterChain.doFilter(req, resp);
             } else {
-                ResponseUtil.writeJson(resp, CommonResult.unauthorized("获取用户名失败"));
+                JsonUtil.write(resp, ResponseEntity.unauthorized("获取用户名失败"));
             }
         } else {
-            ResponseUtil.writeJson(resp, CommonResult.unauthorized("token无效"));
+            JsonUtil.write(resp, ResponseEntity.unauthorized("token无效"));
         }
     }
 

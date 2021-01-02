@@ -1,14 +1,13 @@
 package com.csl.classroom.servlet;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.extra.servlet.ServletUtil;
-import com.alibaba.fastjson.JSON;
-import com.csl.classroom.common.CommonPage;
-import com.csl.classroom.common.CommonResult;
-import com.csl.classroom.dto.SingleId;
+import com.csl.classroom.common.ResponseEntity;
+import com.csl.classroom.common.RestfulPage;
 import com.csl.classroom.mapper.ClassroomMapper;
 import com.csl.classroom.model.Classroom;
+import com.csl.classroom.util.JsonUtil;
 import com.csl.classroom.util.MyBatisUtil;
-import com.csl.classroom.util.ResponseUtil;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.session.SqlSession;
 
@@ -22,6 +21,7 @@ import java.util.Map;
  * @author MaoLongLong
  * @date 2020-12-26 17:46
  */
+@SuppressWarnings("DuplicatedCode")
 public class ClassroomServlet extends HttpServlet {
 
     @Override
@@ -38,7 +38,7 @@ public class ClassroomServlet extends HttpServlet {
         PageInfo<Classroom> pageInfo = MyBatisUtil.pagingQuery(pageNum, pageSize,
                 () -> mapper.findAll(keyword));
 
-        ResponseUtil.writeJson(resp, CommonResult.ok("查询成功", CommonPage.restfulPage(pageInfo)));
+        JsonUtil.write(resp, ResponseEntity.ok("查询成功", RestfulPage.of(pageInfo)));
 
         sqlSession.close();
     }
@@ -49,21 +49,20 @@ public class ClassroomServlet extends HttpServlet {
         SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
         ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
 
-        String body = ServletUtil.getBody(req);
-        Classroom record = JSON.parseObject(body, Classroom.class);
+        Classroom record = JsonUtil.read(req, Classroom.class);
         if (record.getId() == null) {
             record.setId(null);
         }
 
         int ok = mapper.insert(record);
 
-        CommonResult result;
+        ResponseEntity result;
         if (ok == 1) {
-            result = CommonResult.ok("插入成功", record);
+            result = ResponseEntity.ok("插入成功", record);
         } else {
-            result = CommonResult.error("插入失败");
+            result = ResponseEntity.error("插入失败");
         }
-        ResponseUtil.writeJson(resp, result);
+        JsonUtil.write(resp, result);
 
         sqlSession.close();
     }
@@ -74,18 +73,17 @@ public class ClassroomServlet extends HttpServlet {
         SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
         ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
 
-        String body = ServletUtil.getBody(req);
-        SingleId param = JSON.parseObject(body, SingleId.class);
+        Integer id = Convert.toInt(req.getParameter("id"));
 
-        int ok = mapper.deleteByPrimaryKey(param.getId());
+        int ok = mapper.deleteByPrimaryKey(id);
 
-        CommonResult result;
+        ResponseEntity result;
         if (ok == 1) {
-            result = CommonResult.ok("删除成功");
+            result = ResponseEntity.ok("删除成功");
         } else {
-            result = CommonResult.error("删除失败");
+            result = ResponseEntity.error("删除失败");
         }
-        ResponseUtil.writeJson(resp, result);
+        JsonUtil.write(resp, result);
 
         sqlSession.close();
     }
@@ -96,18 +94,17 @@ public class ClassroomServlet extends HttpServlet {
         SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
         ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
 
-        String body = ServletUtil.getBody(req);
-        Classroom record = JSON.parseObject(body, Classroom.class);
+        Classroom record = JsonUtil.read(req, Classroom.class);
 
         int ok = mapper.updateByPrimaryKeySelective(record);
 
-        CommonResult result;
+        ResponseEntity result;
         if (ok == 1) {
-            result = CommonResult.ok("更新成功", record);
+            result = ResponseEntity.ok("更新成功", record);
         } else {
-            result = CommonResult.error("更新失败");
+            result = ResponseEntity.error("更新失败");
         }
-        ResponseUtil.writeJson(resp, result);
+        JsonUtil.write(resp, result);
 
         sqlSession.close();
     }

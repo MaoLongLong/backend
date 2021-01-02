@@ -2,14 +2,12 @@ package com.csl.classroom.servlet;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.extra.servlet.ServletUtil;
-import com.alibaba.fastjson.JSON;
-import com.csl.classroom.common.CommonPage;
-import com.csl.classroom.common.CommonResult;
-import com.csl.classroom.dto.SingleId;
+import com.csl.classroom.common.ResponseEntity;
+import com.csl.classroom.common.RestfulPage;
 import com.csl.classroom.mapper.BuildingMapper;
 import com.csl.classroom.model.Building;
+import com.csl.classroom.util.JsonUtil;
 import com.csl.classroom.util.MyBatisUtil;
-import com.csl.classroom.util.ResponseUtil;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.session.SqlSession;
 
@@ -24,6 +22,7 @@ import java.util.Map;
  * @author MaoLongLong
  * @date 2020-12-26 16:08
  */
+@SuppressWarnings("DuplicatedCode")
 public class BuildingServlet extends HttpServlet {
 
     @Override
@@ -37,7 +36,7 @@ public class BuildingServlet extends HttpServlet {
 
         if (all != null && all) {
             List<Building> buildings = mapper.findAll(null);
-            ResponseUtil.writeJson(resp, CommonResult.ok("查询成功", buildings));
+            JsonUtil.write(resp, ResponseEntity.ok("查询成功", buildings));
         } else {
             String pageNum = param.get("pageNum");
             String pageSize = param.get("pageSize");
@@ -46,7 +45,8 @@ public class BuildingServlet extends HttpServlet {
             PageInfo<Building> pageInfo = MyBatisUtil.pagingQuery(pageNum, pageSize,
                     () -> mapper.findAll(keyword));
 
-            ResponseUtil.writeJson(resp, CommonResult.ok("查询成功", CommonPage.restfulPage(pageInfo)));
+            RestfulPage<Building> page = RestfulPage.of(pageInfo);
+            JsonUtil.write(resp, ResponseEntity.ok("查询成功", page));
         }
 
         sqlSession.close();
@@ -58,21 +58,20 @@ public class BuildingServlet extends HttpServlet {
         SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
         BuildingMapper mapper = sqlSession.getMapper(BuildingMapper.class);
 
-        String body = ServletUtil.getBody(req);
-        Building record = JSON.parseObject(body, Building.class);
+        Building record = JsonUtil.read(req, Building.class);
         if (record.getId() == null) {
             record.setId(null);
         }
 
         int ok = mapper.insert(record);
 
-        CommonResult result;
+        ResponseEntity result;
         if (ok == 1) {
-            result = CommonResult.ok("添加成功", record);
+            result = ResponseEntity.ok("添加成功", record);
         } else {
-            result = CommonResult.error("添加失败");
+            result = ResponseEntity.error("添加失败");
         }
-        ResponseUtil.writeJson(resp, result);
+        JsonUtil.write(resp, result);
 
         sqlSession.close();
     }
@@ -83,18 +82,17 @@ public class BuildingServlet extends HttpServlet {
         SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
         BuildingMapper mapper = sqlSession.getMapper(BuildingMapper.class);
 
-        String body = ServletUtil.getBody(req);
-        SingleId param = JSON.parseObject(body, SingleId.class);
+        Integer id = Convert.toInt(req.getParameter("id"));
 
-        int ok = mapper.deleteByPrimaryKey(param.getId());
+        int ok = mapper.deleteByPrimaryKey(id);
 
-        CommonResult result;
+        ResponseEntity result;
         if (ok == 1) {
-            result = CommonResult.ok("删除成功");
+            result = ResponseEntity.ok("删除成功");
         } else {
-            result = CommonResult.error("删除失败");
+            result = ResponseEntity.error("删除失败");
         }
-        ResponseUtil.writeJson(resp, result);
+        JsonUtil.write(resp, result);
 
         sqlSession.close();
     }
@@ -105,18 +103,17 @@ public class BuildingServlet extends HttpServlet {
         SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
         BuildingMapper mapper = sqlSession.getMapper(BuildingMapper.class);
 
-        String body = ServletUtil.getBody(req);
-        Building record = JSON.parseObject(body, Building.class);
+        Building record = JsonUtil.read(req, Building.class);
 
         int ok = mapper.updateByPrimaryKeySelective(record);
 
-        CommonResult result;
+        ResponseEntity result;
         if (ok == 1) {
-            result = CommonResult.ok("更新成功", record);
+            result = ResponseEntity.ok("更新成功", record);
         } else {
-            result = CommonResult.error("更新失败");
+            result = ResponseEntity.error("更新失败");
         }
-        ResponseUtil.writeJson(resp, result);
+        JsonUtil.write(resp, result);
 
         sqlSession.close();
     }

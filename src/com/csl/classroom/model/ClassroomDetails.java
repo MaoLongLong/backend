@@ -9,6 +9,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ClassroomWithBuilding extends Classroom {
+public class ClassroomDetails extends Classroom {
     private String buildingName;
 }
