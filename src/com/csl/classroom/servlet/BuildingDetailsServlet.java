@@ -9,7 +9,6 @@ import com.csl.classroom.util.JsonUtil;
 import com.csl.classroom.util.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +22,7 @@ import java.util.Map;
 public class BuildingDetailsServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         BuildingMapper mapper = sqlSession.getMapper(BuildingMapper.class);
