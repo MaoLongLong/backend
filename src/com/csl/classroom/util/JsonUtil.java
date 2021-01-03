@@ -36,15 +36,8 @@ public class JsonUtil {
         out.close();
     }
 
-    public static <T> T read(HttpServletRequest req, Class<T> type) {
-        T obj = null;
-        try {
-            obj = OM.readValue(req.getReader(), type);
-        } catch (IOException e) {
-            log.error("Json parse error");
-            e.printStackTrace();
-        }
-        return obj;
+    public static <T> T read(HttpServletRequest req, Class<T> type) throws IOException {
+        return OM.readValue(req.getReader(), type);
     }
 
 }
