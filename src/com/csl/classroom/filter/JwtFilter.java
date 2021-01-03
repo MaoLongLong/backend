@@ -35,7 +35,7 @@ public class JwtFilter implements Filter {
             String username = JwtUtil.getUsernameFromToken(token);
             if (StrUtil.isNotBlank(username)) {
                 req.setAttribute("username", username);
-                log.info("用户 [{}] 验证成功", username);
+                log.debug("用户 [{}] 验证成功", username);
                 filterChain.doFilter(req, resp);
             } else {
                 JsonUtil.write(resp, ResponseEntity.unauthorized("获取用户名失败"));

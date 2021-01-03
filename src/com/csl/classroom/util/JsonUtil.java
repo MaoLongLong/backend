@@ -1,7 +1,7 @@
 package com.csl.classroom.util;
 
-import cn.hutool.extra.servlet.ServletUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +21,7 @@ public class JsonUtil {
 
     static {
         OM = new ObjectMapper();
+        OM.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OM.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
     }
 
@@ -40,8 +41,7 @@ public class JsonUtil {
         try {
             obj = OM.readValue(req.getReader(), type);
         } catch (IOException e) {
-            String body = ServletUtil.getBody(req);
-            log.error("Json parse error: {}", body);
+            log.error("Json parse error");
             e.printStackTrace();
         }
         return obj;

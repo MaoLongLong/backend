@@ -35,5 +35,5 @@ public class Classroom {
     /**
      * status
      */
-    private Byte status;
+    private Boolean status;
 }

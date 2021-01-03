@@ -7,11 +7,10 @@ import com.csl.classroom.dto.LoginParam;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.DefaultClaims;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -41,7 +40,7 @@ public class JwtUtil {
     private JwtUtil() {
     }
 
-    public static String generateToken(Map<String, Object> claims) {
+    public static String generateToken(Claims claims) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpiration())
@@ -50,9 +49,9 @@ public class JwtUtil {
     }
 
     public static String generateToken(LoginParam param) {
-        Map<String, Object> claims = new HashMap<>(2);
-        claims.put("sub", param.getUsername());
-        claims.put("created", new Date());
+        Claims claims = new DefaultClaims();
+        claims.setSubject(param.getUsername());
+        claims.setIssuedAt(new Date());
         return generateToken(claims);
     }
 
