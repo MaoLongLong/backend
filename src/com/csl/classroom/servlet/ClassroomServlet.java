@@ -50,11 +50,11 @@ public class ClassroomServlet extends HttpServlet {
         ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
 
         Classroom record = JsonUtil.read(req, Classroom.class);
-        if (record.getId() == null) {
+        if (record.getId() != null) {
             record.setId(null);
         }
 
-        int ok = mapper.insert(record);
+        int ok = mapper.insertSelective(record);
 
         ResponseEntity result;
         if (ok == 1) {

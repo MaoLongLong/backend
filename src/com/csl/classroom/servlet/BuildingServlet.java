@@ -5,6 +5,7 @@ import cn.hutool.extra.servlet.ServletUtil;
 import com.csl.classroom.common.ResponseEntity;
 import com.csl.classroom.common.RestfulPage;
 import com.csl.classroom.mapper.BuildingMapper;
+import com.csl.classroom.mapper.ClassroomMapper;
 import com.csl.classroom.model.Building;
 import com.csl.classroom.util.JsonUtil;
 import com.csl.classroom.util.MyBatisUtil;
@@ -59,11 +60,11 @@ public class BuildingServlet extends HttpServlet {
         BuildingMapper mapper = sqlSession.getMapper(BuildingMapper.class);
 
         Building record = JsonUtil.read(req, Building.class);
-        if (record.getId() == null) {
+        if (record.getId() != null) {
             record.setId(null);
         }
 
-        int ok = mapper.insert(record);
+        int ok = mapper.insertSelective(record);
 
         ResponseEntity result;
         if (ok == 1) {
@@ -80,14 +81,16 @@ public class BuildingServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
-        BuildingMapper mapper = sqlSession.getMapper(BuildingMapper.class);
+        BuildingMapper buildingMapper = sqlSession.getMapper(BuildingMapper.class);
+        ClassroomMapper classroomMapper = sqlSession.getMapper(ClassroomMapper.class);
 
         Integer id = Convert.toInt(req.getParameter("id"));
 
-        int ok = mapper.deleteByPrimaryKey(id);
+        int ok = buildingMapper.deleteByPrimaryKey(id);
 
         ResponseEntity result;
         if (ok == 1) {
+            classroomMapper.deleteByBuildingId(id);
             result = ResponseEntity.ok("删除成功");
         } else {
             result = ResponseEntity.error("删除失败");

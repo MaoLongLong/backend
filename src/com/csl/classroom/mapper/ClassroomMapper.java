@@ -26,4 +26,8 @@ public interface ClassroomMapper {
     int updateByPrimaryKey(Classroom record);
 
     List<ClassroomDetails> findAll(@Param("keyword") String keyword);
+
+    int deleteByBuildingId(@Param("buildingId")Integer buildingId);
+
+
 }
