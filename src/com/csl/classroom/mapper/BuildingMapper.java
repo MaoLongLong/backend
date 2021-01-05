@@ -28,4 +28,6 @@ public interface BuildingMapper {
     List<Building> findAll(@Param("keyword") String keyword);
 
     BuildingDetails getBuildingDetail(Integer id);
+
+    Integer count();
 }

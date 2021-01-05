@@ -3,6 +3,7 @@ package com.csl.classroom.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ public class JsonUtil {
 
     static {
         OM = new ObjectMapper();
+        OM.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         OM.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OM.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
     }

@@ -27,4 +27,6 @@ public interface UserMapper {
     User findOneByUsername(@Param("username") String username);
 
     List<User> findAll();
+
+    Integer count();
 }

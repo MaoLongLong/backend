@@ -27,7 +27,7 @@ public interface ClassroomMapper {
 
     List<ClassroomDetails> findAll(@Param("keyword") String keyword);
 
-    int deleteByBuildingId(@Param("buildingId")Integer buildingId);
+    int deleteByBuildingId(@Param("buildingId") Integer buildingId);
 
-
+    Integer count();
 }
